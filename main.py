@@ -1,36 +1,81 @@
 from selenium import webdriver
+from time import sleep
 
 browser = webdriver.Firefox(executable_path="/home/avatar/Projects/webscrapingPython/geckodriver")
 
 Lane = {"Top": [], "Jungle": [], "Middle": [], "Bottom": [], "Support": []}
 
 browser.get("https://br.op.gg/champion/statistics")
-element = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[1]/ul/li[2]/a")
-element.click()
-name = browser.find_elements_by_css_selector("td:nth-child(3)")
-winRate = browser.find_elements_by_css_selector("td:nth-child(4)")
+elementWinRate = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[1]/ul/li[2]/a")
+browser.execute_script("return arguments[0].scrollIntoView(true);", elementWinRate)
+elementWinRate.click()
+sleep(2)
 
-print(len(name))
+#Top
+elementTop = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[2]/div/ul/li[2]/a")
+elementTop.click()
+all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-TOP > tr")
+for boneco in all:
+    texto = boneco.text
+    valores = texto.split("\n")
+    nome = valores[1]
+    porcentagens = valores[3].split(" ")
+    winRate = porcentagens[0]
+    Lane["Top"].append([nome, winRate])
 
-print(name[0].text)
-print(winRate[0].text)
+#Jungle
+elementJungle = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[2]/a")
+elementJungle.click()
+all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-JUNGLE > tr")
+for boneco in all:
+    texto = boneco.text
+    valores = texto.split("\n")
+    nome = valores[1]
+    porcentagens = valores[3].split(" ")
+    winRate = porcentagens[0]
+    Lane["Jungle"].append([nome, winRate])
+
+#Middle
+elementMiddle = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[3]/a")
+elementMiddle.click()
+all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-MIDDLE > tr")
+for boneco in all:
+    texto = boneco.text
+    valores = texto.split("\n")
+    nome = valores[1]
+    porcentagens = valores[3].split(" ")
+    winRate = porcentagens[0]
+    Lane["Middle"].append([nome, winRate])
+
+#Bottom
+elementBottom = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[4]/a")
+elementBottom.click()
+all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-BOTTOM > tr")
+for boneco in all:
+    texto = boneco.text
+    valores = texto.split("\n")
+    nome = valores[1]
+    porcentagens = valores[3].split(" ")
+    winRate = porcentagens[0]
+    Lane["Bottom"].append([nome, winRate])
+
+#Support
+elementSupport = browser.find_element_by_xpath("//html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[5]/a")
+elementSupport.click()
+all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-SUPPORT > tr")
+for boneco in all:
+    texto = boneco.text
+    valores = texto.split("\n")
+    nome = valores[1]
+    porcentagens = valores[3].split(" ")
+    winRate = porcentagens[0]
+    Lane["Support"].append([nome, winRate])
 
 
-while len(name) != 149:
-    name.pop()
-
-while len(winRate) != 149:
-    winRate.pop()
-
-print(name[0].text)
-print(winRate[0].text)
-
-for x, y in zip(name, winRate):
-    for z in x.text.split("\n", 1)[1].split(", "):
-        Lane[z].append([x.text.split("\n")[0], y.text])
-
-for x in Lane:
-    print(x)
-    print(Lane[x])
+for key in Lane:
+    print(key)
+    for item in Lane[key]:
+        print(item)
+    
 
 browser.close()
