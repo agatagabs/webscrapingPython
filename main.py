@@ -5,17 +5,18 @@ browser = webdriver.Firefox(executable_path="/home/avatar/Projects/webscrapingPy
 
 Lane = {"Top": [], "Jungle": [], "Middle": [], "Bottom": [], "Support": []}
 
+#Entrando na seção WinRate
 browser.get("https://br.op.gg/champion/statistics")
-elementWinRate = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[1]/ul/li[2]/a")
-browser.execute_script("return arguments[0].scrollIntoView(true);", elementWinRate)
-elementWinRate.click()
+buttonWinRate = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[1]/ul/li[2]/a")
+browser.execute_script("return arguments[0].scrollIntoView(true);", buttonWinRate)
+buttonWinRate.click()
 sleep(2)
 
 #Top
-elementTop = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[2]/div/ul/li[2]/a")
-elementTop.click()
-all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-TOP > tr")
-for boneco in all:
+buttonTop = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-TOP'] > a")
+buttonTop.click()
+top = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-TOP > tr")
+for boneco in top:
     texto = boneco.text
     valores = texto.split("\n")
     nome = valores[1]
@@ -24,10 +25,10 @@ for boneco in all:
     Lane["Top"].append([nome, winRate])
 
 #Jungle
-elementJungle = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[2]/a")
-elementJungle.click()
-all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-JUNGLE > tr")
-for boneco in all:
+buttonJungle = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-JUNGLE'] > a")
+buttonJungle.click()
+jungle = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-JUNGLE > tr")
+for boneco in jungle:
     texto = boneco.text
     valores = texto.split("\n")
     nome = valores[1]
@@ -36,10 +37,10 @@ for boneco in all:
     Lane["Jungle"].append([nome, winRate])
 
 #Middle
-elementMiddle = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[3]/a")
-elementMiddle.click()
-all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-MIDDLE > tr")
-for boneco in all:
+buttonMiddle = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-MID'] > a")
+buttonMiddle.click()
+middle = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-MID > tr")
+for boneco in middle:
     texto = boneco.text
     valores = texto.split("\n")
     nome = valores[1]
@@ -48,10 +49,10 @@ for boneco in all:
     Lane["Middle"].append([nome, winRate])
 
 #Bottom
-elementBottom = browser.find_element_by_xpath("/html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[4]/a")
-elementBottom.click()
-all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-BOTTOM > tr")
-for boneco in all:
+buttonBottom = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-ADC'] > a")
+buttonBottom.click()
+bottom = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-ADC > tr")
+for boneco in bottom:
     texto = boneco.text
     valores = texto.split("\n")
     nome = valores[1]
@@ -60,10 +61,10 @@ for boneco in all:
     Lane["Bottom"].append([nome, winRate])
 
 #Support
-elementSupport = browser.find_element_by_xpath("//html/body/div[2]/div[2]/div[2]/div[1]/div[6]/div/div[2]/div/div[1]/div/ul/li[5]/a")
-elementSupport.click()
-all = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-SUPPORT > tr")
-for boneco in all:
+buttonSupport = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-SUPPORT'] > a")
+buttonSupport.click()
+support = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-SUPPORT > tr")
+for boneco in support:
     texto = boneco.text
     valores = texto.split("\n")
     nome = valores[1]
@@ -71,11 +72,5 @@ for boneco in all:
     winRate = porcentagens[0]
     Lane["Support"].append([nome, winRate])
 
-
-for key in Lane:
-    print(key)
-    for item in Lane[key]:
-        print(item)
-    
-
+#Fim :)
 browser.close()
