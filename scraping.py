@@ -14,65 +14,25 @@ browser.execute_script("return arguments[0].scrollIntoView(true);", buttonWinRat
 buttonWinRate.click()
 sleep(2)
 
-#Top
-buttonTop = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-TOP'] > a")
-buttonTop.click()
-top = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-TOP > tr")
-for boneco in top:
-    texto = boneco.text
-    valores = texto.split("\n")
-    nome = valores[1]
-    porcentagens = valores[3].split(" ")
-    winRate = porcentagens[0]
-    Lane["Top"].append(nome + ": " + winRate)
+def BuscarWinrate(nomeLane,seletorBotao, seletorLine ):
 
-#Jungle
-buttonJungle = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-JUNGLE'] > a")
-buttonJungle.click()
-jungle = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-JUNGLE > tr")
-for boneco in jungle:
-    texto = boneco.text
-    valores = texto.split("\n")
-    nome = valores[1]
-    porcentagens = valores[3].split(" ")
-    winRate = porcentagens[0]
-    Lane["Jungle"].append(nome + ": " + winRate)
+    button = browser.find_element_by_css_selector(seletorBotao)
+    button.click()
+    line = browser.find_elements_by_css_selector(seletorLine)
+    for boneco in line:
+        texto = boneco.text
+        valores = texto.split("\n")
+        nome = valores[1]
+        porcentagens = valores[3].split(" ")
+        winRate = porcentagens[0]
+        Lane[nomeLane].append(nome + ": " + winRate)
 
-#Middle
-buttonMiddle = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-MID'] > a")
-buttonMiddle.click()
-middle = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-MID > tr")
-for boneco in middle:
-    texto = boneco.text
-    valores = texto.split("\n")
-    nome = valores[1]
-    porcentagens = valores[3].split(" ")
-    winRate = porcentagens[0]
-    Lane["Middle"].append(nome + ": " + winRate)
 
-#Bottom
-buttonBottom = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-ADC'] > a")
-buttonBottom.click()
-bottom = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-ADC > tr")
-for boneco in bottom:
-    texto = boneco.text
-    valores = texto.split("\n")
-    nome = valores[1]
-    porcentagens = valores[3].split(" ")
-    winRate = porcentagens[0]
-    Lane["Bottom"].append(nome + ": " + winRate)
-
-#Support
-buttonSupport = browser.find_element_by_css_selector("[data-tab-show-class='champion-trend-winratio-SUPPORT'] > a")
-buttonSupport.click()
-support = browser.find_elements_by_css_selector(".tabItem.champion-trend-winratio-SUPPORT > tr")
-for boneco in support:
-    texto = boneco.text
-    valores = texto.split("\n")
-    nome = valores[1]
-    porcentagens = valores[3].split(" ")
-    winRate = porcentagens[0]
-    Lane["Support"].append(nome + ": " + winRate)
+BuscarWinrate("Top", "[data-tab-show-class='champion-trend-winratio-TOP'] > a", ".tabItem.champion-trend-winratio-TOP > tr" )
+BuscarWinrate("Jungle", "[data-tab-show-class='champion-trend-winratio-JUNGLE'] > a", ".tabItem.champion-trend-winratio-JUNGLE > tr")
+BuscarWinrate("Middle", "[data-tab-show-class='champion-trend-winratio-MID'] > a", ".tabItem.champion-trend-winratio-MID > tr" )
+BuscarWinrate("Bottom", "[data-tab-show-class='champion-trend-winratio-ADC'] > a", ".tabItem.champion-trend-winratio-ADC > tr")
+BuscarWinrate("Support","[data-tab-show-class='champion-trend-winratio-SUPPORT'] > a", ".tabItem.champion-trend-winratio-SUPPORT > tr")
 
 #Fim :)
 browser.close()
