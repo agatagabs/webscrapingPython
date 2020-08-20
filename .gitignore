@@ -2,4 +2,6 @@
 venv
 geckodriver.log
 geckodriver
+debug.log
 chromedriver
+main.py
